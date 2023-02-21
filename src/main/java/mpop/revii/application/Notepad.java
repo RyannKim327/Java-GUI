@@ -4,16 +4,22 @@
  */
 package mpop.revii.application;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author PC
  */
-public class Menu extends javax.swing.JFrame {
+public class Notepad extends javax.swing.JFrame {
 
     /**
-     * Creates new form Menu
+     * Creates new form Notepad
      */
-    public Menu() {
+    public Notepad() {
 	initComponents();
     }
 
@@ -27,15 +33,18 @@ public class Menu extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        bmi_button = new javax.swing.JButton();
-        notepad = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        title = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        note = new javax.swing.JTextPane();
+        save = new javax.swing.JButton();
+        back = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
 
-        jLabel1.setText("Sample GUI Menu");
+        jLabel2.setText("Notepad");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -43,25 +52,38 @@ public class Menu extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
-        bmi_button.setText("BMI");
-        bmi_button.addActionListener(new java.awt.event.ActionListener() {
+        jLabel1.setText("Title:");
+
+        title.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bmi_buttonActionPerformed(evt);
+                titleActionPerformed(evt);
             }
         });
 
-        notepad.setText("NOTEPAD");
-        notepad.addActionListener(new java.awt.event.ActionListener() {
+        jScrollPane1.setViewportView(note);
+
+        save.setText("Save");
+        save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                notepadActionPerformed(evt);
+                saveActionPerformed(evt);
+            }
+        });
+
+        back.setText("Back to menu");
+        back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backActionPerformed(evt);
             }
         });
 
@@ -72,18 +94,31 @@ public class Menu extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(bmi_button, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
-                    .addComponent(notepad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(title))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(save, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(back)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(bmi_button)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(title)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(notepad)
-                .addContainerGap(104, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(save)
+                    .addComponent(back))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -102,29 +137,40 @@ public class Menu extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 12, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bmi_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bmi_buttonActionPerformed
+    private void titleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_titleActionPerformed
         // TODO add your handling code here:
-	BMI self = new BMI();
-	self.setTitle("BMI GUI Project");
-	self.setVisible(true);
-	this.setVisible(false);
-    }//GEN-LAST:event_bmi_buttonActionPerformed
+    }//GEN-LAST:event_titleActionPerformed
 
-    private void notepadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notepadActionPerformed
+    private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
         // TODO add your handling code here:
-	Notepad note = new Notepad();
-	note.setTitle("Notepad");
-	note.setVisible(true);
+	Menu base = new Menu();
+	base.setTitle("Sample GUI Project");
+	base.setVisible(true);
 	this.setVisible(false);
-    }//GEN-LAST:event_notepadActionPerformed
+    }//GEN-LAST:event_backActionPerformed
+
+    private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
+	// To be continued
+	try {
+	    // TODO add your handling code here:
+	    String s = "";
+	    Scanner scan = new Scanner(new FileInputStream("data.json"));
+	    
+	    while(scan.hasNext()){
+		s += scan.nextLine() + (scan.hasNext() ? "\n" : "");
+	    }
+	} catch (Exception ex) {
+	    Logger.getLogger(Notepad.class.getName()).log(Level.SEVERE, null, ex);
+	}
+    }//GEN-LAST:event_saveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -143,29 +189,33 @@ public class Menu extends javax.swing.JFrame {
 		}
 	    }
 	} catch (ClassNotFoundException ex) {
-	    java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+	    java.util.logging.Logger.getLogger(Notepad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 	} catch (InstantiationException ex) {
-	    java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+	    java.util.logging.Logger.getLogger(Notepad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 	} catch (IllegalAccessException ex) {
-	    java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+	    java.util.logging.Logger.getLogger(Notepad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 	} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-	    java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+	    java.util.logging.Logger.getLogger(Notepad.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 	}
 	//</editor-fold>
 
 	/* Create and display the form */
 	java.awt.EventQueue.invokeLater(new Runnable() {
 	    public void run() {
-		new Menu().setVisible(true);
+		new Notepad().setVisible(true);
 	    }
 	});
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bmi_button;
+    private javax.swing.JButton back;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JButton notepad;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextPane note;
+    private javax.swing.JButton save;
+    private javax.swing.JTextField title;
     // End of variables declaration//GEN-END:variables
 }
