@@ -10,7 +10,7 @@ package mpop.revii.application;
  */
 public class Main {
     public static void main(String[] srgs){
-	MainFrame main = new MainFrame();
+	BMI main = new BMI();
 	main.setTitle("BMI GUI Project");
 	main.setVisible(true);
     }
